@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Order Automation for Roofing Companies | PromptLab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#f97316',
+                            dark: '#1f2937',
+                            gray: '#f3f4f6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .workflow-arrow {
+            position: relative;
+        }
+        .workflow-arrow::after {
+            content: '';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.5rem;
+            height: 2px;
+            background: #d1d5db;
+        }
+        .workflow-arrow:last-child::after {
+            display: none;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 2rem;
+            top: 3rem;
+            bottom: -2rem;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .workflow-arrow::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 antialiased bg-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
+                        <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">PromptLab</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#problem" class="text-gray-600 hover:text-gray-900 font-medium transition">Problem</a>
+                    <a href="#solution" class="text-gray-600 hover:text-gray-900 font-medium transition">Solution</a>
+                    <a href="#impact" class="text-gray-600 hover:text-gray-900 font-medium transition">Impact</a>
+                    <a href="#integrations" class="text-gray-600 hover:text-gray-900 font-medium transition">Integrations</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:block text-gray-600 hover:text-gray-900 font-medium transition">Sign In</button>
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-xl font-semibold transition shadow-lg shadow-orange-500/25">
+                        Get Demo
+                    </button>
+                </div>
+                <button class="md:hidden p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#problem" class="block text-gray-600 font-medium">Problem</a>
+                <a href="#solution" class="block text-gray-600 font-medium">Solution</a>
+                <a href="#impact" class="block text-gray-600 font-medium">Impact</a>
+                <a href="#integrations" class="block text-gray-600 font-medium">Integrations</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-4 py-1.5">
+                        <span class="flex h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+                        <span class="text-orange-700 font-semibold text-sm">Now Available for Roofing Contractors</span>
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
+                        Eliminate Manual Change Orders in <span class="gradient-text">24 Hours</span>
+                    </h1>
+                    <p class="text-xl text-gray-600 leading-relaxed max-w-lg">
+                        Automatically capture, update, invoice, and notify — without email threads or billing errors.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold text-lg transition shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2 group">
+                            See Live Demo
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <button class="bg-white hover:bg-gray-50 text-gray-900 border-2 border-gray-200 px-8 py-4 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            Download Workflow Overview
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 text-sm text-gray-500">
+                        <div class="flex -space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
+                            <div class="w-8 h-8 rounded-full bg-gray-400 border-2 border-white"></div>
+                            <div class="w-8 h-8 rounded-full bg-gray-500 border-2 border-white"></div>
+                        </div>
+                        <p>Trusted by 200+ roofing contractors</p>
+                    </div>
+                </div>
+
+                <!-- Right Content - Dashboard Mockup -->
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-3xl opacity-20 blur-2xl"></div>
+                    <div class="relative bg-white rounded-3xl shadow-2xl border border-gray-200 p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            </div>
+                            <div class="text-sm font-medium text-gray-400">Change Order Dashboard</div>
+                        </div>
+                        
+                        <!-- Status Cards -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-green-50 border border-green-200 rounded-2xl p-4 flex items-start gap-3">
+                                <div class="bg-green-500 rounded-lg p-2">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-green-700 uppercase tracking-wide">Status</p>
+                                    <p class="text-sm font-bold text-green-900">Change Order Submitted</p>
+                                    <p class="text-xs text-green-600 mt-1">2 mins ago</p>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 flex items-start gap-3">
+                                <div class="bg-blue-500 rounded-lg p-2">
+                                    <i data-lucide="database" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-blue-700 uppercase tracking-wide">CRM</p>
+                                    <p class="text-sm font-bold text-blue-900">MarketSharp Updated</p>
+                                    <p class="text-xs text-blue-600 mt-1">Auto-synced</p>
+                                </div>
+                            </div>
+                            <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4 flex items-start gap-3">
+                                <div class="bg-purple-500 rounded-lg p-2">
+                                    <i data-lucide="file-text" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-purple-700 uppercase tracking-wide">Billing</p>
+                                    <p class="text-sm font-bold text-purple-900">Invoice Generated</p>
+                                    <p class="text-xs text-purple-600 mt-1">QuickBooks #2847</p>
+                                </div>
+                            </div>
+                            <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4 flex items-start gap-3">
+                                <div class="bg-orange-500 rounded-lg p-2">
+                                    <i data-lucide="bell" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-semibold text-orange-700 uppercase tracking-wide">Notification</p>
+                                    <p class="text-sm font-bold text-orange-900">Homeowner Notified</p>
+                                    <p class="text-xs text-orange-600 mt-1">SMS + Email sent</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div class="bg-gray-50 rounded-2xl p-4">
+                            <div class="flex justify-between text-sm font-medium text-gray-600 mb-2">
+                                <span>Automation Progress</span>
+                                <span class="text-orange-600">100%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-orange-500 h-2.5 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Way Most Roofers Handle Change Orders Today</h2>
+                <p class="text-lg text-gray-600">Manual processes are costing you time and money</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Left Column -->
+                <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-lg border border-gray-200">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Manual & Error-Prone Workflow</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700">Change details buried in email chains</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700">Field notes manually retyped into CRM</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700">QuickBooks updated separately</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700">Homeowner waiting for confirmation</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="x-circle" class="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700">Project manager double-checking everything</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Column -->
+                <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-lg border border-gray-200">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="dollar-sign" class="w-6 h-6 text-orange-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">The Real Cost</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="clock" class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700"><strong>4–6 admin hours</strong> per week</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="trending-down" class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700"><strong>Delayed billing</strong> = delayed cash flow</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="alert-circle" class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700"><strong>Margin leakage</strong> from missed updates</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="users" class="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0"></i>
+                            <span class="text-gray-700"><strong>Frustrated team</strong> & confused homeowners</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before vs After Section -->
+    <section id="solution" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Transform Your Workflow</h2>
+                <p class="text-lg text-gray-600">See the difference automation makes</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden border-2 border-gray-200 shadow-2xl">
+                <!-- Before -->
+                <div class="bg-gray-100 p-8 lg:p-10 border-b-2 lg:border-b-0 lg:border-r-2 border-gray-200">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="inline-block bg-gray-300 text-gray-700 px-4 py-1.5 rounded-full text-sm font-bold">Before</div>
+                        <i data-lucide="x-circle" class="w-6 h-6 text-red-400"></i>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm border border-gray-200 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-700">Email</p>
+                                <p class="text-sm text-gray-500">Change details buried in threads</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center">
+                            <i data-lucide="arrow-down" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm border border-gray-200 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="table" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-700">Spreadsheet</p>
+                                <p class="text-sm text-gray-500">Manual data entry & updates</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <i data-lucide="arrow-down" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm border border-gray-200 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="database" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-700">CRM</p>
+                                <p class="text-sm text-gray-500">Retype everything into MarketSharp</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <i data-lucide="arrow-down" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm border border-gray-200 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="calculator" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-700">QuickBooks</p>
+                                <p class="text-sm text-gray-500">Separate invoice creation</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <i data-lucide="arrow-down" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+
+                        <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-sm border border-gray-200 opacity-70">
+                            <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="smartphone" class="w-5 h-5 text-gray-500"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-gray-700">Text Message</p>
+                                <p class="text-sm text-gray-500">Manually notify homeowner</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 bg-red-50 border border-red-200 rounded-xl p-4 text-center">
+                        <p class="text-red-700 font-semibold text-sm flex items-center justify-center gap-2">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                            5+ steps, hours of manual work, prone to errors
+                        </p>
+                    </div>
+                </div>
+
+                <!-- After -->
+                <div class="bg-gradient-to-br from-orange-50 to-white p-8 lg:p-10 relative">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-orange-200 rounded-full blur-3xl opacity-30 -mr-20 -mt-20"></div>
+                    
+                    <div class="relative">
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="inline-block bg-orange-500 text-white px-4 py-1.5 rounded-full text-sm font-bold">With PromptLab</div>
+                            <i data-lucide="check-circle" class="w-6 h-6 text-green-500"></i>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-md border-2 border-orange-200">
+                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="zap" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">Trigger</p>
+                                    <p class="text-sm text-gray-600">Change order initiated from field or office</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center">
+                                <i data-lucide="arrow-down" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-md border-2 border-blue-200">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="brain" class="w-5 h-5 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">AI Capture</p>
+                                    <p class="text-sm text-gray-600">Details extracted automatically from photos/notes</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <i data-lucide="arrow-down" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-md border-2 border-green-200">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">CRM Sync</p>
+                                    <p class="text-sm text-gray-600">MarketSharp updated instantly — no typing</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <i data-lucide="arrow-down" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-md border-2 border-purple-200">
+                                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="file-invoice" class="w-5 h-5 text-purple-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">Auto Invoice</p>
+                                    <p class="text-sm text-gray-600">QuickBooks invoice generated automatically</p>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <i data-lucide="arrow-down" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+
+                            <div class="flex items-center gap-4 bg-white rounded-xl p-4 shadow-md border-2 border-pink-200">
+                                <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="send" class="w-5 h-5 text-pink-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">Notification</p>
+                                    <p class="text-sm text-gray-600">Homeowner alerted via SMS + Email instantly</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 bg-green-100 border border-green-200 rounded-xl p-4 text-center">
+                            <p class="text-green-800 font-semibold text-sm flex items-center justify-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                One trigger, fully automated, zero manual work
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Summary -->
+            <div class="mt-12 grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                    <p class="text-4xl font-bold text-gray-400 mb-2">4-6 hrs</p>
+                    <p class="text-gray-600 font-medium">Weekly admin time (Before)</p>
+                </div>
+                <div class="bg-orange-50 rounded-2xl p-6 shadow-md border border-orange-200">
+                    <p class="text-4xl font-bold text-orange-600 mb-2">5 min</p>
+                    <p class="text-gray-700 font-medium">Setup time (With PromptLab)</p>
+                </div>
+                <div class="bg-green-50 rounded-2xl p-6 shadow-md border border-green-200">
+                    <p class="text-4xl font-bold text-green-600 mb-2">99%</p>
+                    <p class="text-gray-700 font-medium">Reduction in data errors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-lg text-gray-600">Five simple steps to automation</p>
+            </div>
+
+            <div class="relative space-y-8">
+                <!-- Step 1 -->
+                <div class="timeline-item relative flex gap-6">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/25 z-10 relative">
+                            <i data-lucide="clipboard-edit" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Step 1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Change Order Submitted</h3>
+                        <p class="text-gray-600">From the field using CompanyCam or directly from the office. Any device, anywhere.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-item relative flex gap-6">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/25 z-10 relative">
+                            <i data-lucide="scan" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Step 2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">AI Captures All Details</h3>
+                        <p class="text-gray-600">Our AI extracts materials, labor, costs, and descriptions from photos and notes automatically.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-item relative flex gap-6">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/25 z-10 relative">
+                            <i data-lucide="database" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-green-500 uppercase tracking-wider">Step 3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">MarketSharp Automatically Updated</h3>
+                        <p class="text-gray-600">Customer record, job details, and project timeline updated without manual entry.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-item relative flex gap-6">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/25 z-10 relative">
+                            <i data-lucide="file-text" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div class="timeline-line"></div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-purple-500 uppercase tracking-wider">Step 4</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">QuickBooks Invoice Generated</h3>
+                        <p class="text-gray-600">Professional invoice created with correct line items, pricing, and job codes.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="timeline-item relative flex gap-6">
+                    <div class="relative">
+                        <div class="w-16 h-16 bg-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-500/25 z-10 relative">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-bold text-pink-500 uppercase tracking-wider">Step 5</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Review Task Created + Homeowner Notified</h3>
+                        <p class="text-gray-600">Project manager gets approval task, homeowner receives instant notification with details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact Section -->
+    <section id="impact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Business Impact</h2>
+                <p class="text-lg text-gray-600">Real results for roofing contractors</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-7 h-7 text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Faster Billing Cycles</h3>
+                    <p class="text-gray-600 leading-relaxed">Invoices generated the moment change orders are approved. No more delays.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="copy" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Zero Duplicate Data Entry</h3>
+                    <p class="text-gray-600 leading-relaxed">No more copying between systems. Enter once, sync everywhere.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="shield" class="w-7 h-7 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Protected Margins</h3>
+                    <p class="text-gray-600 leading-relaxed">Every cost accounted for and synced. Stop leaking profits.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                    <div class="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="eye" class="w-7 h-7 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Real-Time Visibility</h3>
+                    <p class="text-gray-600 leading-relaxed">Status updates reflected across all systems instantly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section id="integrations" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Built to Work With Your Existing Roofing Stack</h2>
+                <p class="text-lg text-gray-600">Seamless integrations with the tools you already use</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition">
+                        <i data-lucide="home" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">MarketSharp</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition">
+                        <i data-lucide="calculator" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">QuickBooks</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition">
+                        <i data-lucide="camera" class="w-8 h-8 text-orange-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">CompanyCam</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition">
+                        <i data-lucide="briefcase" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">JobNimbus</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition">
+                        <i data-lucide="cloud" class="w-8 h-8 text-red-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">AccuLynx</span>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-200 flex flex-col items-center justify-center gap-3 hover:shadow-lg transition-shadow group">
+                    <div class="w-16 h-16 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition">
+                        <i data-lucide="more-horizontal" class="w-8 h-8 text-gray-600"></i>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm">+ Many More</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500 rounded-full blur-3xl opacity-20 -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full blur-3xl opacity-20 -ml-32 -mb-32"></div>
+                
+                <div class="relative">
+                    <i data-lucide="quote" class="w-12 h-12 text-orange-500 mb-6 opacity-50"></i>
+                    <blockquote class="text-2xl md:text-3xl font-medium leading-relaxed mb-8">
+                        "Before PromptLab, our PM spent 3 hours every Friday reconciling change orders. Now it's automated."
+                    </blockquote>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            OM
+                        </div>
+                        <div>
+                            <p class="font-bold text-white">Operations Manager</p>
+                            <p class="text-gray-400">Mid-Sized Roofing Company</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Stop Losing Time and Margin to Manual Change Orders
+            </h2>
+            <p class="text-xl text-gray-400 mb-10">
+                See exactly how this would work inside your roofing operation.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-bold text-lg transition shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2 group">
+                    Get Custom Demo
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+            <p class="mt-6 text-sm text-gray-500">Free 30-minute consultation • No commitment required</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white">PromptLab</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                        Automating change orders for roofing contractors. Eliminate manual work, protect margins, and get paid faster.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition">Integrations</a></li>
+                        <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition">Security</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2024 PromptLab. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+</html>
